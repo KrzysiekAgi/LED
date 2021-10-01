@@ -1,3 +1,5 @@
+import scalariform.formatter.preferences._
+
 name := """led"""
 organization := "com.shipit"
 
@@ -9,6 +11,11 @@ scalaVersion := "2.13.6"
 
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
+
+scalariformPreferences := scalariformPreferences.value
+  .setPreference(AlignSingleLineCaseStatements, true)
+  .setPreference(DoubleIndentConstructorArguments, true)
+  .setPreference(DanglingCloseParenthesis, Preserve)
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.shipit.controllers._"
