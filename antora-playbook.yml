@@ -3,11 +3,11 @@ site:
   start_page: component-b::index.adoc
 content:
   sources:
-  - url: https://gitlab.com/antora/demo/demo-component-a.git
+  - url: ../demo-component-a
     branches: master
     edit_url: "http://localhost:9000/dispatch/notepad/docs/demo-component-a-master/{path}"
-  - url: https://gitlab.com/antora/demo/demo-component-b.git
-    branches: [v2.0, v1.0]
+  - url: ../demo-component-b
+    branches: master
     start_path: docs
     edit_url: "http://localhost:9000/dispatch/notepad/docs/demo-component-b-master-docs/{path}"
 ui:
