@@ -1,5 +1,6 @@
 package controllers
 
+import play.api.libs.json.{ Format, Json }
 import play.api.mvc._
 
 import javax.inject._
@@ -9,7 +10,7 @@ import javax.inject._
  * application's home page.
  */
 @Singleton
-class HomeController @Inject() (val controllerComponents: ControllerComponents) extends BaseController {
+class LEDController @Inject() (val controllerComponents: ControllerComponents) extends BaseController {
 
   /**
    * Create an Action to render an HTML page.
@@ -18,7 +19,7 @@ class HomeController @Inject() (val controllerComponents: ControllerComponents) 
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+  def dispatch(editor: String, file: String) = Action { implicit request: Request[AnyContent] =>
+    Ok(s"Open $file with editor $editor")
   }
 }
