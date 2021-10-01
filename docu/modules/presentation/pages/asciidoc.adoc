@@ -1,0 +1,7 @@
+= AsciiDoc
+
+https://projects.eclipse.org/projects/asciidoc.asciidoc-lang
+
+AsciiDoc is a comprehensive, semantic markup language for producing a variety of presentation-rich output formats from content encoded in a concise, human-readable, plain text format. It also includes a set of APIs for transforming the encoded content, extending the syntax/grammar and processor lifecycle, and integrating with tools and publishing platforms. Teams and individuals use AsciiDoc to write product documentation, technical specifications, architectural guides, scientific and analytical reports, academic courses and training materials, books, and other technical communication.
+
+The AsciiDoc language isn’t coupled to the output format it produces. Software that implements the AsciiDoc Language Specification can parse and comprehend AsciiDoc and convert the parsed document structure to one or more output formats, such as HTML, PDF, EPUB, man page, and DocBook. The ability to produce multiple output formats allows AsciiDoc to be used in static site generators, IDEs, git tools and services, CI/CD systems, and other software.

@@ -1,48 +1,60 @@
 package controllers
 
-import com.typesafe.config.ConfigFactory
+import models.DispatchResult
+import play.api.Configuration
+import play.api.libs.json.{ Format, Json }
 import play.api.mvc._
 
+import java.io.File
 import java.net.URLDecoder
 import javax.inject._
-import scala.util.{Failure, Success, Try}
+import scala.sys.process._
+import scala.util.{ Failure, Success, Try }
 
-/**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
 @Singleton
-class LEDController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class LEDController @Inject() (
+    config: Configuration,
+    val controllerComponents: ControllerComponents
+) extends BaseController {
 
-  /**
-   * Create an Action to render an HTML page.
-   *
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
-  def dispatch(editor: String, file: String) = Action { implicit request: Request[AnyContent] =>
-    val result: Try[String] = openFile(editor, file)
-    result match {
-      case Success(out) => Ok(s"Open file with $editor, result: $out")
-      case Failure(ex) => BadRequest(ex.getMessage)
+  def dispatch(editor: String, file: String): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+
+    dispatchFile(editor, file) match {
+      case Success(result)    => Ok(Json.toJson(result))
+      case Failure(exception) => BadRequest(exception.getMessage)
     }
   }
 
-  private def openFile(editorName: String, file: String): Try[String] = {
-    val conf = ConfigFactory.load
-    try {
-      val editorResult = Option(conf.getString(s"editors.$editorName"))
-      if (editorResult.isEmpty) {
-        return new Failure[String](new IllegalArgumentException(s"There is no mapping for editor: $editorName"))
-      }
+  private def dispatchFile(editor: String, file: String): Try[DispatchResult] = {
 
-      import scala.sys.process._
-      val decoded = URLDecoder.decode(file, "UTF-8")
-      Seq(s"${editorResult.get} $decoded").run()
-      Success(s"${editorResult.get} $decoded")
-    } catch {
-      case ex: Exception => new Failure[String](ex)
+    def getEditorPath: Try[String] = config.getOptional[String](s"editors.$editor") match {
+      case Some(path) => Success(path)
+      case None       => Failure(new IllegalArgumentException(s"No config found for editor '$editor'"))
+    }
+
+    def editorPathExists(editorPath: String): Try[String] = if (new File(editorPath).exists()) {
+      Success(editorPath)
+    } else {
+      Failure(new IllegalStateException(s"Editor '$editor' expected at path '$editorPath' but not found"))
+    }
+
+    def filePathExists: Try[String] = {
+      val utf8file = URLDecoder.decode(file, "UTF-8")
+      if (new File(utf8file).exists()) {
+        Success(utf8file)
+      } else {
+        Failure(new IllegalStateException(s"Can't edit file '$utf8file', it doesn't exist"))
+      }
+    }
+
+    for {
+      editorPath <- getEditorPath
+      _ <- editorPathExists(editorPath)
+      filePath <- filePathExists
+    } yield {
+      val cmd = s"""$editorPath "$filePath""""
+      val output = cmd.!!
+      DispatchResult(editor, editorPath, filePath, output)
     }
   }
 }

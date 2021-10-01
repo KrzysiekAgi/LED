@@ -1,0 +1,6 @@
+= Links
+
+https://docs.antora.org/antora/2.3/playbook/content-edit-url/::
+Another exception is if the page originates from the local filesystem (i.e., a worktree). In this case, the default UI uses the local file:// URI for the Edit this Page link. You can force the default UI to always use the edit URL by setting the CI environment variable (e.g., CI=true) when building the site. (This environment variable is already set in most CI environments). The assumption is that if the CI environment variable is set, the site is being published to a remote server where a file:// URI would not be accessible. Rather than setting this environment variable, you can customize the UI template to change the logic.
+
+

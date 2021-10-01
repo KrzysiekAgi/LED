@@ -1,5 +1,7 @@
-name: led-docu
-title: LED (Local Editor Dispatcher) Documentation
-version: dev
+name: led
+version: 1.0.0
+prerelease: false
+title: LED - Local Editor Dispatcher
+start_page: links.adoc
 nav:
-- modules/ROOT/nav.adoc
+  - modules/presentation/nav.adoc

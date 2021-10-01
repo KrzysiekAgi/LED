@@ -1,0 +1,28 @@
+# Error: self signed certificate -> https://gitlab.com/antora/antora/-/issues/390 (Set environment variable NODE_EXTRA_CA_CERTS to your own ca bundle containing your certs.)
+site:
+  title: Local Editor Dispatcher
+  url: https://example.org
+asciidoc:
+  attributes:
+    page-pagination: true
+content:
+  sources:
+  - url: .
+    branches: HEAD
+    start_path: docu
+    edit_url: 'http://localhost:9000/dispatch/editor/D:/projects/shipit/led/{path}'
+  - url: https://github.com/asciidoctor/asciidoc-docs.git
+    branches: main
+    start_path: docs
+  - url: https://gitlab.com/antora/antora.git
+    branches: v2.3.x, master
+    start_path: docs
+  - url: https://gitlab.com/antora/antora-ui-default.git
+    branches: master
+    start_path: docs
+ui:
+  bundle:
+    url: ../led-ui/zip/ui-bundle.zip
+    snapshot: true
+runtime:
+  cache_dir: ./.cache

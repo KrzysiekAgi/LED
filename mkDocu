@@ -1,0 +1,3 @@
+#!/bin/bash
+
+CI=true antora antora-local-playbook.yml
