@@ -1,0 +1,5 @@
+name: led-docu
+title: LED (Local Editor Dispatcher) Documentation
+version: dev
+nav:
+- modules/ROOT/nav.adoc
