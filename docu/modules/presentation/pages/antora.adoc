@@ -2,4 +2,6 @@
 
 https://antora.org/
 
+The multi-repository documentation site generator for tech writers who 🤍 writing in AsciiDoc.
+
 A documentation pipeline that enables docs, product, and engineering teams to create, manage, remix, and publish documentation sites composed in AsciiDoc and sourced from multiple versioned content repositories.
