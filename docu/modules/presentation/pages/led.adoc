@@ -1,3 +1,3 @@
 = LED
 
-LED, the local editor dispatcher ...
+LED, the local editor dispatcher is a tool allowing for local edition of antora files. It overrides the "Edit this page" button to link to local docu repository and open a local editor. This allows for quick edition without having to commit after fixing each typo.
